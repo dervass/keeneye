@@ -240,10 +240,45 @@
     }
 
     .mn-body {
-      padding: 120px 40px 60px;
+      padding: 100px 40px 60px;
       display: flex;
       flex-direction: column;
-      gap: 48px
+      gap: 40px
+    }
+
+    .mn-top-btns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 8px
+    }
+
+    .mn-top-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #fff;
+      border: 1px solid var(--rule);
+      padding: 20px;
+      border-radius: 12px;
+      text-decoration: none;
+      color: var(--ink);
+      transition: all .2s ease
+    }
+
+    .mn-top-btn:active {
+      transform: scale(0.95);
+      background: var(--rule);
+    }
+
+    .mn-top-btn span {
+      font-size: 10px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--mid)
     }
 
     .mn-links {
@@ -789,6 +824,29 @@
       gap: 48px
     }
 
+    @media(max-width:767px) {
+      .svc-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+      }
+      .svc-card {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 12px;
+      }
+      .svc-n {
+        font-size: 24px;
+      }
+      .svc-name {
+        font-size: 14px;
+      }
+      .svc-desc {
+        font-size: 11px;
+        line-height: 1.4;
+      }
+    }
+
     @media(min-width:1024px) {
       .svc-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -891,11 +949,13 @@
 
     @media(min-width:768px) {
       .c-info-grid {
-        grid-template-columns: 1fr 1fr
+        grid-template-columns: repeat(3, 1fr);
+        gap: 40px;
       }
 
       .c-email-row {
-        grid-column: 1 / -1
+        grid-column: 1 / -1;
+        margin-top: 20px;
       }
     }
 
@@ -1015,10 +1075,25 @@
 <body>
   <div class="mob-nav" id="mob-nav" role="dialog" aria-modal="true" aria-label="Mobile navigation">
     <div class="mn-body">
+      <div class="mn-top-btns">
+        <a href="tel:+302315318397" class="mn-top-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l2.19-2.19a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+          </svg>
+          <span>Κλήση</span>
+        </a>
+        <a href="mailto:info@keeneye1.gr" class="mn-top-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+            <polyline points="22,6 12,13 2,6" />
+          </svg>
+          <span>Email</span>
+        </a>
+      </div>
       <nav class="mn-links">
         <a href="#hero" class="mn-link">Αρχική</a>
-        <a href="#portfolio" class="mn-link">Έργα</a>
         <a href="#about" class="mn-link">Εταιρεία</a>
+        <a href="#portfolio" class="mn-link">Έργα</a>
         <a href="#contact" class="mn-link" style="color:var(--acc)">Επικοινωνία</a>
       </nav>
       <a href="https://www.instagram.com/keeneye_adv/" target="_blank" rel="noopener" class="mn-ig-row">
@@ -1061,8 +1136,8 @@
       </a>
       <div class="nav-links">
         <a href="#hero">Αρχική</a>
-        <a href="#portfolio">Έργα</a>
         <a href="#about">Εταιρεία</a>
+        <a href="#portfolio">Έργα</a>
         <a href="#services">Υπηρεσίες</a>
       </div>
     </div>
@@ -1335,11 +1410,6 @@
         <div class="c-sub">Γαμβέτα 147<br>Τ.Κ. 54248</div>
       </div>
       <div>
-        <div class="c-label">Αριδαία</div>
-        <div class="c-val"><a href="tel:+302384021972">2384 021 972</a></div>
-        <div class="c-sub">Τσάκοι<br>Τ.Κ. 58400</div>
-      </div>
-      <div>
         <div class="c-label">Κινητά</div>
         <div class="c-val">
           <a href="tel:+306932002129">693 200 2129</a><br>
@@ -1348,7 +1418,12 @@
         </div>
         <div class="c-sub">Άμεση εξυπηρέτηση</div>
       </div>
-      <div class="c-email-item">
+      <div>
+        <div class="c-label">Αριδαία</div>
+        <div class="c-val"><a href="tel:+302384021972">2384 021 972</a></div>
+        <div class="c-sub">Τσάκοι<br>Τ.Κ. 58400</div>
+      </div>
+      <div class="c-email-row">
         <div class="c-label">Email</div>
         <div class="c-val"><a href="mailto:info@keeneye1.gr">info@keeneye1.gr</a></div>
       </div>
