@@ -215,11 +215,15 @@
 
     @media(max-width: 767px) {
       .hero {
-        background: radial-gradient(circle at top left, #FDFBF7 0%, #F7F3ED 100%);
+        background: #FDFBF7 url('./photos/mobile-hero-logo.png') no-repeat center center;
+        background-size: contain;
         text-align: center;
         align-items: center;
         padding-inline: 20px; /* Mobile Gutters */
+        color: var(--ink);
       }
+      .hero h1 { color: var(--ink); }
+      .h-body { color: var(--mid); }
     }
 
     h1 {
@@ -287,40 +291,120 @@
     </button>
   </nav>
 
-  <!-- MOBILE NAV (Preserved Design) -->
-  <div class="mob-nav" id="mob-nav">
-    <div class="mob-nav-inner">
-      <div class="mob-nav-links">
-        <a href="#hero">Αρχική</a>
-        <a href="#portfolio">Έργα</a>
-        <a href="#contact">Επικοινωνία</a>
-      </div>
-
-      <div class="mob-nav-footer">
-        <div class="mob-footer-contact">
-          <div class="mob-footer-label">Επικοινωνία</div>
-          <a href="tel:+302315318397" class="mob-footer-val">2315 318 397 (Θεσ/νίκη)</a>
-          <a href="tel:+302384021972" class="mob-footer-val">2384 021 972 (Αριδαία)</a>
-          <div style="font-size:13px; color:rgba(0,0,0,0.6); margin-top:6px; font-weight:600">Κινητά</div>
-          <a href="tel:+306932002129" class="mob-footer-val">693 200 2129</a>
-          <a href="tel:+306987687660" class="mob-footer-val">698 768 7660</a>
-          <a href="tel:+306936937300" class="mob-footer-val">693 693 7300</a>
-          <a href="mailto:info@keeneye1.gr" class="mob-footer-val" style="margin-top:8px">info@keeneye1.gr</a>
-        </div>
-
-        <div class="mob-footer-social">
-          <a href="https://www.instagram.com/keeneye_adv/" target="_blank" aria-label="Follow us on Instagram">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-              stroke-linecap="round" stroke-linejoin="round">
-              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-            </svg>
-          </a>
-        </div>
-      </div>
+  <!-- MOBILE NAV — Premium Overlay -->
+  <div class="mob-nav" id="mob-nav" role="dialog" aria-modal="true" aria-label="Mobile navigation">
+    <!-- Sticky top bar -->
+    <div class="mn-bar">
+      <a href="#hero" class="mn-logo" id="mn-logo-link">
+        <picture>
+          <source srcset="./logo-2x.avif 2x" type="image/avif">
+          <source srcset="./logo-1x.webp 1x, ./logo-2x.webp 2x" type="image/webp">
+          <img src="./logo-1x.webp" alt="Keen Eye Advertising" width="318" height="224"
+            style="height:34px;width:auto;display:block;">
+        </picture>
+      </a>
+      <button class="mn-close" id="mn-close" aria-label="Close menu">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#c96b43" stroke-width="1.5" stroke-linecap="round">
+          <line x1="2" y1="2" x2="14" y2="14"/>
+          <line x1="14" y1="2" x2="2" y2="14"/>
+        </svg>
+      </button>
     </div>
-  </div>
+
+    <!-- Scrollable content area -->
+    <div class="mn-body">
+
+      <!-- Main nav links -->
+      <nav class="mn-links" aria-label="Site navigation">
+        <a href="#hero"      class="mn-link mn-item" data-delay="1">Αρχική</a>
+        <a href="#portfolio" class="mn-link mn-item" data-delay="2">Έργα</a>
+        <a href="#contact"   class="mn-link mn-item mn-link--accent" data-delay="3">Επικοινωνία</a>
+      </nav>
+
+      <!-- Contact section -->
+      <div class="mn-contact mn-item" data-delay="4">
+        <div class="mn-divider"></div>
+        <p class="mn-section-label">Επικοινωνία</p>
+
+        <div class="mn-contact-grid">
+
+          <!-- Thessaloniki -->
+          <div class="mn-cg-row">
+            <div class="mn-cg-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+                <circle cx="12" cy="9" r="2.5"/>
+              </svg>
+            </div>
+            <div class="mn-cg-body">
+              <span class="mn-cg-label">Θεσσαλονίκη</span>
+              <a href="tel:+302315318397" class="mn-cg-num">2315 318 397</a>
+            </div>
+          </div>
+          <div class="mn-inner-divider"></div>
+
+          <!-- Aridea -->
+          <div class="mn-cg-row">
+            <div class="mn-cg-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+                <circle cx="12" cy="9" r="2.5"/>
+              </svg>
+            </div>
+            <div class="mn-cg-body">
+              <span class="mn-cg-label">Αριδαία</span>
+              <a href="tel:+302384021972" class="mn-cg-num">2384 021 972</a>
+            </div>
+          </div>
+          <div class="mn-inner-divider"></div>
+
+          <!-- Mobile numbers -->
+          <div class="mn-cg-row">
+            <div class="mn-cg-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
+                <line x1="12" y1="18" x2="12.01" y2="18"/>
+              </svg>
+            </div>
+            <div class="mn-cg-body">
+              <span class="mn-cg-label">Κινητά</span>
+              <a href="tel:+306932002129" class="mn-cg-num">693 200 2129</a>
+              <a href="tel:+306987687660" class="mn-cg-num">698 768 7660</a>
+              <a href="tel:+306936937300" class="mn-cg-num">693 693 7300</a>
+            </div>
+          </div>
+          <div class="mn-inner-divider"></div>
+
+          <!-- Email -->
+          <div class="mn-cg-row">
+            <div class="mn-cg-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="4" width="20" height="16" rx="2"/>
+                <polyline points="2,4 12,13 22,4"/>
+              </svg>
+            </div>
+            <div class="mn-cg-body">
+              <span class="mn-cg-label">Email</span>
+              <a href="mailto:info@keeneye1.gr" class="mn-cg-num">info@keeneye1.gr</a>
+            </div>
+          </div>
+
+        </div><!-- /mn-contact-grid -->
+      </div><!-- /mn-contact -->
+
+      <!-- Bottom Instagram -->
+      <div class="mn-bottom mn-item" data-delay="5">
+        <a href="https://www.instagram.com/keeneye_adv/" target="_blank" rel="noopener" class="mn-ig" aria-label="Follow us on Instagram">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+          </svg>
+        </a>
+      </div>
+
+    </div><!-- /mn-body -->
+  </div><!-- /mob-nav -->
 
 
   <!-- HERO -->
@@ -615,23 +699,35 @@
 
       // TASK 1: Essential UI (Mobile Menu)
       runTask(() => {
-        const mobBtn = document.getElementById('mob-menu'),
-          mobNav = document.getElementById('mob-nav'),
-          mobLinks = document.querySelectorAll('#mob-nav a');
+        const mobBtn  = document.getElementById('mob-menu'),
+              mobNav  = document.getElementById('mob-nav'),
+              mnClose = document.getElementById('mn-close'),
+              mnLogoLink = document.getElementById('mn-logo-link');
+
+        const openMenu = () => {
+          mobBtn.classList.add('open');
+          mobNav.classList.add('open');
+          document.body.style.overflow = 'hidden';
+        };
+        const closeMenu = () => {
+          mobBtn.classList.remove('open');
+          mobNav.classList.remove('open');
+          document.body.style.overflow = '';
+        };
 
         if (mobBtn && mobNav) {
           mobBtn.addEventListener('click', () => {
-            mobBtn.classList.toggle('open');
-            mobNav.classList.toggle('open');
-            document.body.style.overflow = mobNav.classList.contains('open') ? 'hidden' : '';
+            mobNav.classList.contains('open') ? closeMenu() : openMenu();
           });
 
-          mobLinks.forEach(link => {
-            link.addEventListener('click', () => {
-              mobBtn.classList.remove('open');
-              mobNav.classList.remove('open');
-              document.body.style.overflow = '';
-            });
+          // New: dedicated close button
+          if (mnClose) mnClose.addEventListener('click', closeMenu);
+          // New: logo link in menu closes it too
+          if (mnLogoLink) mnLogoLink.addEventListener('click', closeMenu);
+
+          // Close on any nav link click
+          document.querySelectorAll('#mob-nav a:not(#mn-logo-link)').forEach(link => {
+            link.addEventListener('click', closeMenu);
           });
         }
       });
