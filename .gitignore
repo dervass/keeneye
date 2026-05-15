@@ -1,0 +1,18 @@
+# Development Files
+node_modules/
+package.json
+package-lock.json
+
+# Redundant Styles & Scripts (Now Inlined)
+main.min.js
+style.css
+style.min.css
+style.css.bak
+
+# Backups
+*.bak
+index.html.bak
+
+# OS Files
+.DS_Store
+Thumbs.db
