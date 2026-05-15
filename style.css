@@ -784,7 +784,7 @@ h1 em {
 }
 
 .c-info-grid > div {
-  padding: 24px;
+  padding: 16px 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -793,12 +793,12 @@ h1 em {
 
 @media(min-width:640px) {
   .c-info-grid { grid-template-columns: 1fr 1fr; }
-  .c-email-item { grid-column: span 2; text-align: center; margin-top: 60px; display:flex; flex-direction:column; align-items:center; }
+  .c-email-item { grid-column: span 2; text-align: center; margin-top: 0; display:flex; flex-direction:column; align-items:center; }
 }
 
 @media(min-width:960px) {
   .c-info-grid { grid-template-columns: repeat(3, 1fr); max-width: 1200px; gap: 32px; }
-  .c-email-item { grid-column: 1 / -1; margin-top: 80px; padding: 40px 24px !important; }
+  .c-email-item { grid-column: 1 / -1; margin-top: 0; padding: 0 24px 20px !important; }
 }
 
 /* Ensure email block is centered on all widths */
@@ -809,7 +809,7 @@ h1 em {
   letter-spacing: .2em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.4);
-  margin-bottom: 24px;
+  margin-bottom: 16px;
   font-weight: 500;
 }
 
@@ -822,8 +822,8 @@ h1 em {
   line-height: 1.6;
 }
 
-.c-val a { color: #F7F3ED; text-decoration: none; transition: all .3s ease; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 2px; }
-.c-val a:hover { color: var(--acc); border-color: var(--acc); }
+.c-val a { color: #F7F3ED; text-decoration: none; transition: all .3s ease; border-bottom: none; padding-bottom: 0; }
+.c-val a:hover { color: var(--acc); }
 
 .c-sub {
   font-size: 13px;
