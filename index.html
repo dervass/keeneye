@@ -83,11 +83,12 @@
     }
   </script>
   <style>
-    /* Critical CSS for ATF */
+    /* Critical CSS for ATF - Senior Mobile UX Optimized */
     * {
       margin: 0;
       padding: 0;
-      box-sizing: border-box
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
     }
 
     :root {
@@ -100,18 +101,28 @@
       --glass: rgba(253, 251, 247, 0.85);
       --serif: 'Libre Baskerville', Georgia, serif;
       --sans: 'Manrope', sans-serif;
+      /* Typography Standards */
+      --base-font-size: 16px;
+      --line-height: 1.5;
+    }
+
+    html {
+      font-size: var(--base-font-size);
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--ink);
+      line-height: var(--line-height);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
 
     @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .hero-reveal {
@@ -119,134 +130,105 @@
       animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
-    .delay-1 {
-      animation-delay: 0.2s;
-    }
+    .delay-1 { animation-delay: 0.2s; }
+    .delay-2 { animation-delay: 0.4s; }
+    .delay-3 { animation-delay: 0.6s; }
 
-    .delay-2 {
-      animation-delay: 0.4s;
-    }
-
-    .delay-3 {
-      animation-delay: 0.6s;
-    }
-
-    body {
-      font-family: var(--sans);
-      background: var(--bg);
-      color: var(--ink);
-      -webkit-font-smoothing: antialiased
-    }
-
+    /* Layout & Navigation */
     nav {
-      padding: 24px 40px;
+      padding: clamp(12px, 3vh, 24px) clamp(20px, 5vw, 80px);
       display: flex;
       align-items: center;
       justify-content: space-between;
       position: sticky;
       top: 0;
-      background: rgba(247, 243, 237, 0.9);
+      background: var(--glass);
       backdrop-filter: blur(15px);
       -webkit-backdrop-filter: blur(15px);
-      z-index: 100;
+      z-index: 1000;
       border-bottom: 1px solid var(--rule);
-    }
-
-    @media(min-width:768px) {
-      nav {
-        padding: 20px 80px;
-      }
+      height: clamp(60px, 10vh, 88px);
     }
 
     .nav-left {
       display: flex;
       align-items: center;
-      gap: 48px
+      gap: 2.5rem;
     }
 
     .nav-links {
       display: none;
-      gap: 32px;
-      align-items: center
+      gap: 2rem;
+      align-items: center;
     }
 
-    @media(min-width:768px) {
-      .nav-links {
-        display: flex;
-      }
+    @media(min-width: 768px) {
+      .nav-links { display: flex; }
     }
 
     .nav-links a {
-      font-size: 11px;
-      letter-spacing: .16em;
+      font-size: 0.75rem;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
       color: var(--mid);
       text-decoration: none;
-      transition: color .15s
+      transition: color 0.2s;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
     }
 
-    .nav-links a:hover {
-      color: var(--ink);
-    }
+    .nav-links a:hover { color: var(--ink); }
 
     .nav-contact-btn {
       display: none;
       align-items: center;
-      gap: 8px;
+      gap: 0.5rem;
       border: 1px solid var(--ink);
       color: var(--ink);
-      font-size: 10px;
-      letter-spacing: .14em;
+      font-size: 0.625rem;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      padding: 10px 24px;
-      border-radius: 30px;
+      padding: 0 1.5rem;
+      height: 44px; /* Strict Touch Target */
+      border-radius: 22px;
       text-decoration: none;
       transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    @media(min-width:768px) {
-      .nav-contact-btn {
-        display: inline-flex;
-      }
+    @media(min-width: 768px) {
+      .nav-contact-btn { display: inline-flex; }
     }
 
+    /* Hero Section - 100dvh Optimized */
     .hero {
       position: relative;
-      padding: 40px;
+      padding: clamp(20px, 5vw, 80px);
       display: flex;
       flex-direction: column;
       justify-content: center;
-      overflow: hidden;
+      min-height: 100dvh;
       background: url('./photos/hero-bg.webp') no-repeat center center;
       background-size: cover;
-      min-height: calc(100vh - 80px);
-      z-index: 1;
+      overflow: hidden;
     }
 
-    @media(max-width:767px) {
+    @media(max-width: 767px) {
       .hero {
         background: radial-gradient(circle at top left, #FDFBF7 0%, #F7F3ED 100%);
-        padding: 120px 32px 80px;
-        min-height: 85vh;
         text-align: center;
         align-items: center;
-      }
-
-      h1 {
-        font-size: clamp(42px, 12vw, 56px);
-        line-height: 1.0;
-        margin-bottom: 24px;
-        letter-spacing: -0.04em;
+        padding-inline: 20px; /* Mobile Gutters */
       }
     }
 
     h1 {
       font-family: var(--serif);
-      font-size: clamp(40px, 8vw, 84px);
+      font-size: clamp(2.5rem, 10vw, 5.25rem);
       font-weight: 400;
-      line-height: 1.05;
-      letter-spacing: -.03em;
-      margin-bottom: 24px
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
     }
 
     h1 em {
@@ -257,34 +239,25 @@
     }
 
     .h-tag {
-      font-size: 10px;
-      letter-spacing: .25em;
+      font-size: 0.625rem;
+      letter-spacing: 0.25em;
       text-transform: uppercase;
       color: var(--acc);
-      margin-bottom: 24px;
-      font-weight: 500
-    }
-
-    @media(min-width:768px) {
-      .h-tag {
-        font-size: 11px;
-        margin-bottom: 32px
-      }
+      margin-bottom: 1.5rem;
+      font-weight: 600;
     }
 
     .h-body {
-      font-size: 15px;
-      line-height: 1.8;
+      font-size: 1rem;
+      line-height: var(--line-height);
       color: var(--mid);
       max-width: 420px;
-      margin-top: 28px;
-      font-weight: 300
+      margin-inline: auto; /* Centered for hero text if mobile */
+      font-weight: 300;
     }
 
-    @media(min-width:768px) {
-      .h-body {
-        font-size: 16px
-      }
+    @media(min-width: 768px) {
+      .h-body { margin-inline: 0; } /* Left-aligned for desktop */
     }
   </style>
   <link rel="stylesheet" href="./style.css">
