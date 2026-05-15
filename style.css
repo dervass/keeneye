@@ -195,8 +195,8 @@ nav {
   pointer-events: auto;
   transform: translateY(0);
 }
-/* Hide main nav bar when overlay is open to prevent overlap */
-body:has(.mob-nav.open) nav { opacity: 0; pointer-events: none; }
+/* Hide main site nav bar when overlay is open — only targets direct child */
+body:has(.mob-nav.open) > nav { opacity: 0; pointer-events: none; }
 
 /* Top sticky bar */
 .mn-bar {
@@ -239,23 +239,26 @@ body:has(.mob-nav.open) nav { opacity: 0; pointer-events: none; }
 .mn-links {
   display: flex;
   flex-direction: column;
+  width: 100%;
   margin-bottom: 32px;
 }
 .mn-link {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
+  width: 100%;
   font-family: var(--serif);
-  font-size: clamp(2.4rem, 11vw, 2.8rem);
+  font-size: clamp(2.2rem, 10vw, 2.6rem);
   letter-spacing: -0.03em;
   line-height: 1.1;
   color: var(--ink);
   text-decoration: none;
-  padding: 10px 0;
-  min-height: 56px;
-  border-bottom: none;
+  padding: 14px 0;
+  min-height: 60px;
+  border-bottom: 1px solid #e8e4df;
 }
 .mn-link--accent { color: #c96b43; }
-.mn-link:hover { opacity: 0.6; }
+.mn-link:active { opacity: 0.6; }
 
 /* Contact section */
 .mn-contact { flex-shrink: 0; }
