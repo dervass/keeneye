@@ -239,6 +239,26 @@
       pointer-events: auto
     }
 
+    .mn-close {
+      position: absolute;
+      top: 58px;
+      right: 40px;
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 210;
+      color: var(--ink)
+    }
+
+    .mn-close svg {
+      width: 24px;
+      height: 24px
+    }
+
     .mn-body {
       padding: 40px 40px 60px;
       display: flex;
@@ -246,40 +266,7 @@
       gap: 40px
     }
 
-    .mn-top-btns {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 8px
-    }
 
-    .mn-top-btn {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      background: #fff;
-      border: 1px solid var(--rule);
-      padding: 20px;
-      border-radius: 12px;
-      text-decoration: none;
-      color: var(--ink);
-      transition: all .2s ease
-    }
-
-    .mn-top-btn:active {
-      transform: scale(0.95);
-      background: var(--rule);
-    }
-
-    .mn-top-btn span {
-      font-size: 10px;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      font-weight: 600;
-      color: var(--mid)
-    }
 
     .mn-links {
       display: flex;
@@ -793,13 +780,13 @@
       background: transparent;
       border: 1px solid var(--ink);
       color: var(--ink);
-      font-size: 11px;
-      letter-spacing: .18em;
+      font-size: 10px;
+      letter-spacing: .15em;
       text-transform: uppercase;
-      padding: 14px 32px;
+      padding: 12px 24px;
       cursor: pointer;
       transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-      border-radius: 4px
+      border-radius: 30px
     }
 
     .port-load button:hover {
@@ -1078,25 +1065,17 @@
 
 <body>
   <div class="mob-nav" id="mob-nav" role="dialog" aria-modal="true" aria-label="Mobile navigation">
+    <button class="mn-close" id="mn-close" aria-label="Close menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
     <div class="mn-body">
       <div style="margin-bottom: 20px;">
         <img src="./logo-1x.webp" alt="Logo" style="height: 60px; width: auto; opacity: 0.8;">
       </div>
-      <div class="mn-top-btns">
-        <a href="tel:+302315318397" class="mn-top-btn">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l2.19-2.19a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-          </svg>
-          <span>Κλήση</span>
-        </a>
-        <a href="mailto:info@keeneye1.gr" class="mn-top-btn">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-            <polyline points="22,6 12,13 2,6" />
-          </svg>
-          <span>Email</span>
-        </a>
-      </div>
+
       <nav class="mn-links">
         <a href="#hero" class="mn-link">Αρχική</a>
         <a href="#about" class="mn-link">Εταιρεία</a>
@@ -1448,34 +1427,34 @@
       const runTask = (fn) => { if ('requestIdleCallback' in window) { requestIdleCallback(fn) } else { setTimeout(fn, 1) } };
 
       runTask(() => {
-        const mobBtn = document.getElementById('mob-menu'), mobNav = document.getElementById('mob-nav');
+        const mobBtn = document.getElementById('mob-menu'), mobNav = document.getElementById('mob-nav'), closeBtn = document.getElementById('mn-close');
         const openMenu = () => { mobBtn.classList.add('open'); mobNav.classList.add('open'); document.body.style.overflow = 'hidden' };
         const closeMenu = () => { mobBtn.classList.remove('open'); mobNav.classList.remove('open'); document.body.style.overflow = '' };
         if (mobBtn && mobNav) {
           mobBtn.addEventListener('click', () => { mobNav.classList.contains('open') ? closeMenu() : openMenu() });
+          if (closeBtn) closeBtn.addEventListener('click', closeMenu);
           document.querySelectorAll('#mob-nav a').forEach(link => link.addEventListener('click', closeMenu));
         }
       });
 
       runTask(() => {
         const items = Array.from(document.querySelectorAll('.port-item')), filters = document.querySelectorAll('.p-filt'), loadMoreBtn = document.getElementById('load-more-btn'), loadLessBtn = document.getElementById('load-less-btn'), container = document.getElementById('port-load-container');
-        let currentFilter = 'all', itemsLimit = 12;
-        const isMobile = window.innerWidth < 768;
+        let currentFilter = 'all', itemsLimit = window.innerWidth < 768 ? 6 : 12;
         const updateGrid = () => {
-          let visibleCount = 0; const currentLimit = isMobile ? 6 : itemsLimit;
+          const isMob = window.innerWidth < 768;
+          let visibleCount = 0;
           items.forEach(item => {
             const cat = item.getAttribute('data-category');
-            if (currentFilter === 'all' || cat === currentFilter) { if (visibleCount < currentLimit) { item.classList.add('visible') } else { item.classList.remove('visible') } visibleCount++ } else { item.classList.remove('visible') }
+            if (currentFilter === 'all' || cat === currentFilter) { if (visibleCount < itemsLimit) { item.classList.add('visible') } else { item.classList.remove('visible') } visibleCount++ } else { item.classList.remove('visible') }
           });
           const totalAvailable = currentFilter === 'all' ? items.length : items.filter(i => i.getAttribute('data-category') === currentFilter).length;
-          const displayLimit = isMobile ? 6 : itemsLimit;
-          loadMoreBtn.style.display = totalAvailable > displayLimit ? 'inline-block' : 'none';
-          loadLessBtn.style.display = itemsLimit > (isMobile ? 6 : 12) ? 'inline-block' : 'none';
-          container.style.display = (totalAvailable <= displayLimit && itemsLimit <= (isMobile ? 6 : 12)) ? 'none' : 'flex';
+          loadMoreBtn.style.display = totalAvailable > itemsLimit ? 'inline-block' : 'none';
+          loadLessBtn.style.display = itemsLimit > (isMob ? 6 : 12) ? 'inline-block' : 'none';
+          container.style.display = (totalAvailable <= (isMob ? 6 : 12) && itemsLimit <= (isMob ? 6 : 12)) ? 'none' : 'flex';
         };
-        filters.forEach(btn => btn.addEventListener('click', () => { filters.forEach(f => f.classList.remove('active')); btn.classList.add('active'); currentFilter = btn.getAttribute('data-filter'); itemsLimit = 12; updateGrid() }));
-        loadMoreBtn.addEventListener('click', () => { itemsLimit += isMobile ? 6 : 12; updateGrid() });
-        loadLessBtn.addEventListener('click', () => { itemsLimit = isMobile ? 6 : 12; updateGrid(); document.getElementById('portfolio').scrollIntoView({ behavior: 'smooth' }) });
+        filters.forEach(btn => btn.addEventListener('click', () => { filters.forEach(f => f.classList.remove('active')); btn.classList.add('active'); currentFilter = btn.getAttribute('data-filter'); itemsLimit = window.innerWidth < 768 ? 6 : 12; updateGrid() }));
+        loadMoreBtn.addEventListener('click', () => { itemsLimit += window.innerWidth < 768 ? 6 : 12; updateGrid() });
+        loadLessBtn.addEventListener('click', () => { itemsLimit = window.innerWidth < 768 ? 6 : 12; updateGrid(); document.getElementById('portfolio').scrollIntoView({ behavior: 'smooth' }) });
         updateGrid()
       });
 
