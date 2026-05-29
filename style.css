@@ -319,7 +319,8 @@ nav {
 
 @media(max-width:767px) {
   .hero {
-    background: #FBF8F3;
+    background: url('./photos/hero-mobile.webp') no-repeat center center;
+    background-size: cover;
     padding: 80px 32px 60px;
     min-height: auto
   }
@@ -331,12 +332,6 @@ nav {
   inset: 0;
   background: rgba(247, 243, 237, 0.85);
   z-index: -1
-}
-
-@media(max-width:767px) {
-  .hero::before {
-    background: none;
-  }
 }
 
 @media(min-width:768px) {
