@@ -21,7 +21,7 @@
   <meta property="twitter:description"
     content="Ολοκληρωμένες διαφημιστικές λύσεις και ψηφιακές εκτυπώσεις στη Θεσσαλονίκη από το 1995.">
   <meta property="twitter:image" content="https://keeneye.gr/photos/og-image.jpg">
-  <link rel="preload" as="image" href="./logo-1x.webp" imagesrcset="./logo-1x.webp 1x, ./logo-2x.avif 2x"
+  <link rel="preload" as="image" href="./photos/logo-1x.webp" imagesrcset="./photos/logo-1x.webp 1x, ./photos/logo-2x.avif 2x"
     fetchpriority="high">
 
   <link rel="preload" as="image" href="./photos/hero-mobile.webp" fetchpriority="high" media="(max-width: 767px)">
@@ -54,7 +54,7 @@
     </button>
     <div class="mn-body">
       <div style="margin-bottom: 20px;">
-        <img src="./logo-1x.webp" alt="Logo" style="height: 60px; width: auto; opacity: 0.8;">
+        <img src="./photos/logo-1x.webp" alt="Logo" style="height: 60px; width: auto; opacity: 0.8;">
       </div>
 
       <nav class="mn-links">
@@ -95,9 +95,9 @@
     <div class="nav-left">
       <a href="#hero" title="Keen Eye Advertising - Home">
         <picture>
-          <source srcset="./logo-2x.avif 2x" type="image/avif">
-          <source srcset="./logo-1x.webp 1x, ./logo-2x.webp 2x" type="image/webp">
-          <img src="./logo-1x.webp" alt="Keen Eye Advertising - Logo" width="318" height="224"
+          <source srcset="./photos/logo-2x.avif 2x" type="image/avif">
+          <source srcset="./photos/logo-1x.webp 1x, ./photos/logo-2x.webp 2x" type="image/webp">
+          <img src="./photos/logo-1x.webp" alt="Keen Eye Advertising - Logo" width="318" height="224"
             style="width:auto;display:block;" fetchpriority="high">
         </picture>
       </a>
@@ -405,51 +405,71 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const runTask = (fn) => { if ('requestIdleCallback' in window) { requestIdleCallback(fn) } else { setTimeout(fn, 1) } };
+      // Mobile Navigation
+      const mobNav = document.getElementById('mob-nav'), mobBtn = document.getElementById('mob-menu');
+      const toggleNav = (open) => {
+        mobBtn?.classList.toggle('open', open);
+        mobNav?.classList.toggle('open', open);
+        document.body.style.overflow = open ? 'hidden' : '';
+      };
+      mobBtn?.addEventListener('click', () => toggleNav(!mobNav?.classList.contains('open')));
+      document.getElementById('mn-close')?.addEventListener('click', () => toggleNav(false));
+      mobNav?.querySelectorAll('a').forEach(link => link.addEventListener('click', () => toggleNav(false)));
 
-      runTask(() => {
-        const mobBtn = document.getElementById('mob-menu'), mobNav = document.getElementById('mob-nav'), closeBtn = document.getElementById('mn-close');
-        const openMenu = () => { mobBtn.classList.add('open'); mobNav.classList.add('open'); document.body.style.overflow = 'hidden' };
-        const closeMenu = () => { mobBtn.classList.remove('open'); mobNav.classList.remove('open'); document.body.style.overflow = '' };
-        if (mobBtn && mobNav) {
-          mobBtn.addEventListener('click', () => { mobNav.classList.contains('open') ? closeMenu() : openMenu() });
-          if (closeBtn) closeBtn.addEventListener('click', closeMenu);
-          document.querySelectorAll('#mob-nav a').forEach(link => link.addEventListener('click', closeMenu));
-        }
+      // Portfolio Grid & Filtering
+      const items = Array.from(document.querySelectorAll('.port-item'));
+      const filters = document.querySelectorAll('.p-filt');
+      const loadMoreBtn = document.getElementById('load-more-btn');
+      const loadLessBtn = document.getElementById('load-less-btn');
+      const container = document.getElementById('port-load-container');
+      let currentFilter = 'all', itemsLimit = window.innerWidth < 768 ? 6 : 12;
+
+      const updateGrid = () => {
+        const isMob = window.innerWidth < 768, initLimit = isMob ? 6 : 12;
+        let visibleCount = 0;
+        items.forEach(item => {
+          const cat = item.getAttribute('data-category');
+          const matches = currentFilter === 'all' || cat === currentFilter;
+          const show = matches && visibleCount < itemsLimit;
+          item.classList.toggle('visible', show);
+          if (matches) visibleCount++;
+        });
+        const total = currentFilter === 'all' ? items.length : items.filter(i => i.getAttribute('data-category') === currentFilter).length;
+        if (loadMoreBtn) loadMoreBtn.style.display = total > itemsLimit ? 'inline-block' : 'none';
+        if (loadLessBtn) loadLessBtn.style.display = itemsLimit > initLimit ? 'inline-block' : 'none';
+        if (container) container.style.display = (total <= initLimit && itemsLimit <= initLimit) ? 'none' : 'flex';
+      };
+
+      filters.forEach(btn => btn.addEventListener('click', () => {
+        filters.forEach(f => f.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.getAttribute('data-filter');
+        itemsLimit = window.innerWidth < 768 ? 6 : 12;
+        updateGrid();
+      }));
+      loadMoreBtn?.addEventListener('click', () => { itemsLimit += window.innerWidth < 768 ? 6 : 12; updateGrid(); });
+      loadLessBtn?.addEventListener('click', () => { itemsLimit = window.innerWidth < 768 ? 6 : 12; updateGrid(); document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' }); });
+      updateGrid();
+
+      // Lightbox
+      const lightbox = document.getElementById('lightbox'), lbImg = document.getElementById('lb-img');
+      const toggleLb = (src) => {
+        if (lbImg) lbImg.src = src || '';
+        lightbox?.classList.toggle('active', !!src);
+        document.body.style.overflow = src ? 'hidden' : '';
+      };
+      document.getElementById('port-grid')?.addEventListener('click', (e) => {
+        const item = e.target.closest('.port-item');
+        if (item) toggleLb(item.querySelector('img')?.src);
       });
+      document.getElementById('lb-close')?.addEventListener('click', () => toggleLb(''));
+      lightbox?.addEventListener('click', (e) => { if (e.target === lightbox) toggleLb(''); });
 
-      runTask(() => {
-        const items = Array.from(document.querySelectorAll('.port-item')), filters = document.querySelectorAll('.p-filt'), loadMoreBtn = document.getElementById('load-more-btn'), loadLessBtn = document.getElementById('load-less-btn'), container = document.getElementById('port-load-container');
-        let currentFilter = 'all', itemsLimit = window.innerWidth < 768 ? 6 : 12;
-        const updateGrid = () => {
-          const isMob = window.innerWidth < 768;
-          let visibleCount = 0;
-          items.forEach(item => {
-            const cat = item.getAttribute('data-category');
-            if (currentFilter === 'all' || cat === currentFilter) { if (visibleCount < itemsLimit) { item.classList.add('visible') } else { item.classList.remove('visible') } visibleCount++ } else { item.classList.remove('visible') }
-          });
-          const totalAvailable = currentFilter === 'all' ? items.length : items.filter(i => i.getAttribute('data-category') === currentFilter).length;
-          loadMoreBtn.style.display = totalAvailable > itemsLimit ? 'inline-block' : 'none';
-          loadLessBtn.style.display = itemsLimit > (isMob ? 6 : 12) ? 'inline-block' : 'none';
-          container.style.display = (totalAvailable <= (isMob ? 6 : 12) && itemsLimit <= (isMob ? 6 : 12)) ? 'none' : 'flex';
-        };
-        filters.forEach(btn => btn.addEventListener('click', () => { filters.forEach(f => f.classList.remove('active')); btn.classList.add('active'); currentFilter = btn.getAttribute('data-filter'); itemsLimit = window.innerWidth < 768 ? 6 : 12; updateGrid() }));
-        loadMoreBtn.addEventListener('click', () => { itemsLimit += window.innerWidth < 768 ? 6 : 12; updateGrid() });
-        loadLessBtn.addEventListener('click', () => { itemsLimit = window.innerWidth < 768 ? 6 : 12; updateGrid(); document.getElementById('portfolio').scrollIntoView({ behavior: 'smooth' }) });
-        updateGrid()
-      });
-
-      runTask(() => {
-        const lightbox = document.getElementById('lightbox'), lbImg = document.getElementById('lb-img'), lbClose = document.getElementById('lb-close'), grid = document.getElementById('port-grid');
-        grid.addEventListener('click', (e) => { const item = e.target.closest('.port-item'); if (item) { lbImg.src = item.querySelector('img').src; lightbox.classList.add('active'); document.body.style.overflow = 'hidden' } });
-        lbClose.addEventListener('click', () => { lightbox.classList.remove('active'); document.body.style.overflow = '' });
-        lightbox.addEventListener('click', (e) => { if (e.target === lightbox) { lightbox.classList.remove('active'); document.body.style.overflow = '' } })
-      });
-
-      runTask(() => {
-        const revealObserver = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('active'); revealObserver.unobserve(entry.target) } }) }, { threshold: .1 });
-        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el))
-      })
+      // Scroll Reveal
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => e.isIntersecting && (e.target.classList.add('active'), observer.unobserve(e.target)));
+      }, { threshold: 0.1 });
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
     });
   </script>
 </body>
